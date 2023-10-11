@@ -1,7 +1,18 @@
 ﻿version: '3'
 services:
-  dotnet:
+  dotnet_sdk:
     image: mcr.microsoft.com/dotnet/sdk:7.0
     ports:
-      - "5000:5000"
+      - "${PORT:-5000}:${PORT:-5000}"
+    networks:
+      - taskTracker
+    volumes:
+      - ./src:/app
+      - ./.env:/env/.env
+    command: "tail -f /dev/null" 
+    working_dir: /app
   
+networks:
+  taskTracker:
+    ipam:
+      driver: default
