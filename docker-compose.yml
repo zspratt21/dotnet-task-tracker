@@ -1,0 +1,7 @@
+﻿version: '3'
+services:
+  dotnet:
+    image: mcr.microsoft.com/dotnet/sdk:7.0
+    ports:
+      - "5000:5000"
+  
