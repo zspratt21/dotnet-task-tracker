@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using DotEnv.Core;
+using TaskTracker.Routing;
 
 new EnvLoader()
     .AddEnvFile("../env/.env")
     .Load();
 
-var env = new EnvReader();
-
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello world!!!");
-
-app.Run("http://"+env["HOST"]+":"+env["PORT"]+"");
+IndexRoutes.MapRoutes(app);
+    
+app.Run("http://"+EnvReader.Instance["HOST"]+":"+EnvReader.Instance["PORT"]+"");
