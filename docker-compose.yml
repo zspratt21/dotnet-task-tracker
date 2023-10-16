@@ -1,7 +1,9 @@
 ﻿version: '3'
 services:
   dotnet_sdk:
-    image: mcr.microsoft.com/dotnet/sdk:7.0
+    build:
+      context: ./docker/dotnet-sdk
+      dockerfile: dockerfile
     ports:
       - "${PORT:-5000}:${PORT:-5000}"
     networks:
@@ -12,7 +14,27 @@ services:
     command: "tail -f /dev/null" 
     working_dir: /app
   
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    ports: 
+      - '${DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - 'mysql-data:/var/lib/mysql'
+    networks:
+      - taskTracker
+
 networks:
   taskTracker:
     ipam:
       driver: default
+      
+volumes:
+  mysql-data:
+    driver: local
