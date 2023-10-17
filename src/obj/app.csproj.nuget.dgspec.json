@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "/app/TaskTrackerAPI.csproj": {}
+    "/app/app.csproj": {}
   },
   "projects": {
-    "/app/TaskTrackerAPI.csproj": {
+    "/app/app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/app/TaskTrackerAPI.csproj",
-        "projectName": "TaskTrackerAPI",
-        "projectPath": "/app/TaskTrackerAPI.csproj",
+        "projectUniqueName": "/app/app.csproj",
+        "projectName": "app",
+        "projectPath": "/app/app.csproj",
         "packagesPath": "/root/.nuget/packages/",
         "outputPath": "/app/obj/",
         "projectStyle": "PackageReference",
@@ -42,6 +42,10 @@
               "target": "Package",
               "version": "[3.0.0, )"
             },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -53,8 +57,22 @@
               "version": "[7.0.12, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[7.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
