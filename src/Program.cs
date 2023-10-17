@@ -3,7 +3,6 @@ using TaskTrackerAPI.Models;
 using DotEnv.Core;
 
 new EnvLoader()
-    .AddEnvFile("../env/.env")
     .Load();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// @todo replace hardcoded variables with env variables.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+	.Replace("localhost", EnvReader.Instance["DB_HOST"])
+    .Replace("3306", EnvReader.Instance["DB_PORT"])
+    .Replace("mydb", EnvReader.Instance["DB_DATABASE"])
+    .Replace("myuser", EnvReader.Instance["DB_USERNAME"])
+    .Replace("mypassword", EnvReader.Instance["DB_PASSWORD"]);
+
 builder.Services.AddDbContext<TaskContext>(options => options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 32))));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -36,4 +40,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://"+EnvReader.Instance["HOST"]+":"+EnvReader.Instance["PORT"]+"");
+app.Run("http://"+EnvReader.Instance["HOST"]+":"+EnvReader.Instance["PORT"]);

@@ -13,6 +13,8 @@ services:
       - ./.env:/env/.env
     command: "tail -f /dev/null" 
     working_dir: /app
+    env_file:
+      - .env
   
   mysql:
     image: 'mysql/mysql-server:8.0'
