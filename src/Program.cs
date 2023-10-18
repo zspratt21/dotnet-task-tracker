@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TaskTrackerAPI.Models;
 using DotEnv.Core;
+using app.Middlewares;
 
 new EnvLoader()
     .Load();
@@ -33,8 +34,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHttpsRedirection();
+}
 
-app.UseHttpsRedirection();
+app.UseMiddleware<IndexMiddleware>();
 
 app.UseAuthorization();
 

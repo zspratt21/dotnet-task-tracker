@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "/home/dev/projects/dotnet-task-tracker/src/app.csproj": {}
+    "/home/dev/projects/dotnet-task-tracker/tests/TaskTracker.Tests.csproj": {}
   },
   "projects": {
     "/home/dev/projects/dotnet-task-tracker/src/app.csproj": {
@@ -90,6 +90,93 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.112/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/dev/projects/dotnet-task-tracker/tests/TaskTracker.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/dev/projects/dotnet-task-tracker/tests/TaskTracker.Tests.csproj",
+        "projectName": "TaskTracker.Tests",
+        "projectPath": "/home/dev/projects/dotnet-task-tracker/tests/TaskTracker.Tests.csproj",
+        "packagesPath": "/home/dev/.nuget/packages/",
+        "outputPath": "/home/dev/projects/dotnet-task-tracker/tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/dev/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/home/dev/projects/dotnet-task-tracker/src/app.csproj": {
+                "projectPath": "/home/dev/projects/dotnet-task-tracker/src/app.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.3.2, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.69, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

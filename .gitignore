@@ -10,7 +10,6 @@
 *.sw?
 
 *.env
-src/bin
-src/obj/Debug
-src/obj/Release
-src/out
+**/bin
+**/Debug
+**/Release

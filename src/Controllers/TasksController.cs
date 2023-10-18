@@ -85,16 +85,22 @@ namespace app.Controllers
         [HttpPost]
         public async Task<ActionResult<TaskItem>> PostTaskItem(TaskItem taskItem)
         {
-          if (_context.Tasks == null)
-          {
-              return Problem("Entity set 'TaskContext.Tasks'  is null.");
-          }
+            if (taskItem == null)
+            {
+                return BadRequest("Task item cannot be null.");
+            }
+
+            if (_context.Tasks == null)
+            {
+                return Problem("Entity set 'TaskContext.Tasks'  is null.");
+            }
+    
             _context.Tasks.Add(taskItem);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTaskItem", new { id = taskItem.Id }, taskItem);
         }
-
+        
         // DELETE: api/Tasks/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTaskItem(int id)
