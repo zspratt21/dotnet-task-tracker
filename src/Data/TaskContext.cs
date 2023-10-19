@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using TaskTracker.Models;
 
-namespace TaskTrackerAPI.Models
+namespace TaskTracker.Data;
+
+public class TaskContext : DbContext
 {
-    public class TaskContext : DbContext
+    public TaskContext(DbContextOptions<TaskContext> options) : base(options)
     {
-        public TaskContext(DbContextOptions<TaskContext> options) : base(options)
-        {
-        }
-
-        public DbSet<TaskItem> Tasks { get; set; }
     }
+
+    public DbSet<TaskItem> Tasks { get; set; }
 }

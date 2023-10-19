@@ -1,26 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
+﻿namespace TaskTracker.Middleware;
 
-namespace app.Middlewares
+public class IndexMiddleware
 {
-    public class IndexMiddleware
+    private readonly RequestDelegate _next;
+
+    public IndexMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public IndexMiddleware(RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context)
+    {
+        if (context.Request.Path.Value == "/")
         {
-            _next = next;
+            context.Response.Redirect("/api/Index");
+            return;
         }
 
-        public async Task InvokeAsync(HttpContext context)
-        {
-            if (context.Request.Path.Value == "/")
-            {
-                context.Response.Redirect("/api/Index");
-                return;
-            }
-
-            await _next(context);
-        }
+        await _next(context);
     }
 }

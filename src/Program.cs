@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using TaskTrackerAPI.Models;
 using DotEnv.Core;
-using app.Middlewares;
+using Microsoft.EntityFrameworkCore;
+using TaskTracker.Data;
+using TaskTracker.Middleware;
 
 new EnvLoader()
     .Load();

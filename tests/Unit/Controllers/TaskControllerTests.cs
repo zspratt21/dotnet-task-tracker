@@ -1,14 +1,17 @@
 ﻿using Xunit;
 using Microsoft.EntityFrameworkCore;
-using TaskTrackerAPI.Models;
-using app.Controllers;
+using TaskTracker.Models;
+using TaskTracker.Data;
+using TaskTracker.Controllers;
 using Microsoft.AspNetCore.Mvc;
+
+namespace TaskTracker.Tests.Unit.Controllers;
 
 public class TasksControllerTests : IDisposable
 {
-    private readonly TaskContext _context; 
+    private readonly TaskContext _context;
     private readonly TasksController _controller;
-    
+
     public void Dispose()
     {
         _context.Dispose();
@@ -17,12 +20,12 @@ public class TasksControllerTests : IDisposable
     public TasksControllerTests()
     {
         var options = new DbContextOptionsBuilder<TaskContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) 
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
         _context = new TaskContext(options);
         _controller = new TasksController(_context);
-        
+
         _context.Tasks.AddRange(
             new TaskItem { Id = 1, Name = "Task 1", IsCompleted = false },
             new TaskItem { Id = 2, Name = "Task 2", IsCompleted = true }
@@ -47,21 +50,17 @@ public class TasksControllerTests : IDisposable
         Assert.Equal("Task 1", result.Value.Name);
     }
 
-	[Fact]
-	public async Task GetTaskItem_ReturnsNotFound_WhenItDoesNotExist()
-	{
-    	var actionResult = await _controller.GetTaskItem(3);
+    [Fact]
+    public async Task GetTaskItem_ReturnsNotFound_WhenItDoesNotExist()
+    {
+        var actionResult = await _controller.GetTaskItem(3);
 
-    	if (actionResult.Result is NotFoundResult)
-    	{
-     	   Assert.True(true);
-   	 	}
-   	 	else
-   	 	{
-            Assert.True(false, $"Unexpected result type: {actionResult.Result?.GetType().Name ?? "null"}");
-     	}
-	}
-    
+        if (actionResult.Result is NotFoundResult)
+            Assert.True(true);
+        else
+            Assert.Fail($"Unexpected result type: {actionResult.Result?.GetType().Name ?? "null"}");
+    }
+
     [Fact]
     public async Task PutTaskItem_ReturnsBadRequest_WhenIdsDoNotMatch()
     {
@@ -69,7 +68,7 @@ public class TasksControllerTests : IDisposable
 
         Assert.IsType<BadRequestResult>(result);
     }
-    
+
     [Fact]
     public async Task PutTaskItem_ReturnsNotFound_WhenTaskItemDoesNotExist()
     {
@@ -77,7 +76,7 @@ public class TasksControllerTests : IDisposable
 
         Assert.IsType<NotFoundResult>(result);
     }
-    
+
     [Fact]
     public async Task PutTaskItem_ReturnsNoContent_WhenSuccessful()
     {
@@ -89,7 +88,7 @@ public class TasksControllerTests : IDisposable
 
         Assert.IsType<NoContentResult>(result);
     }
-    
+
     [Fact]
     public async Task PostTaskItem_ReturnsCreatedResponse_WhenSuccessful()
     {
@@ -97,71 +96,56 @@ public class TasksControllerTests : IDisposable
 
         Assert.IsType<CreatedAtActionResult>(result.Result);
     }
-    
+
     [Fact]
     public async Task PostTaskItem_ReturnsBadRequest_WhenTaskItemIsNull()
     {
         var result = await _controller.PostTaskItem(null);
 
         if (result.Result is BadRequestObjectResult badRequestObjectResult)
-        {
             Assert.True(true, "Correctly received BadRequestObjectResult");
-        }
         else if (result.Result is ObjectResult objectResult)
-        {
-            Assert.True(false, $"Expected BadRequestObjectResult, but received {objectResult.GetType().Name} with message: {objectResult.Value}");
-        }
+            Assert.Fail(
+                $"Expected BadRequestObjectResult, but received {objectResult.GetType().Name} with message: {objectResult.Value}");
         else
-        {
-            Assert.True(false, $"Unexpected result type: {result.Result?.GetType().Name ?? "null"}");
-        }
+            Assert.Fail($"Unexpected result type: {result.Result?.GetType().Name ?? "null"}");
     }
 
 
-
-    
     [Fact]
     public async Task DeleteTaskItem_ReturnsNotFound_WhenTaskItemDoesNotExist()
     {
         var actionResult = await _controller.DeleteTaskItem(0);
 
         if (actionResult is NotFoundResult)
-        {
             Assert.True(true);
-        }
         else
-        {
-            Assert.True(false, "Expected NotFoundResult");
-        }
+            Assert.Fail("Expected NotFoundResult");
     }
-    
+
     [Fact]
     public async Task DeleteTaskItem_ReturnsNoContent_WhenSuccessful()
     {
         var actionResult = await _controller.DeleteTaskItem(1);
 
         if (actionResult is NoContentResult)
-        {
             Assert.True(true);
-        }
         else
-        {
-            Assert.True(false, "Expected NoContentResult");
-        }
+            Assert.Fail("Expected NoContentResult");
     }
-    
+
     [Fact]
     public async Task DeleteTaskItem_RemovesOneItem_WhenSuccessful()
     {
-        var result = await _controller.DeleteTaskItem(1);
+        await _controller.DeleteTaskItem(1);
 
         Assert.Equal(1, _context.Tasks.Count());
     }
-    
+
     [Fact]
     public async Task DeleteTaskItem_RemovesCorrectItem_WhenSuccessful()
     {
-        var result = await _controller.DeleteTaskItem(1);
+        await _controller.DeleteTaskItem(1);
 
         Assert.Equal(2, _context.Tasks.First().Id);
     }

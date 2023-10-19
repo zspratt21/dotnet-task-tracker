@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TaskTrackerAPI.Models;
+using TaskTracker.Data;
 
 #nullable disable
 
-namespace app.Migrations
+namespace TaskTracker.Migrations
 {
     [DbContext(typeof(TaskContext))]
     [Migration("20231017004607_InitialCreate")]
@@ -21,7 +21,7 @@ namespace app.Migrations
                 .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("TaskTrackerAPI.Models.TaskItem", b =>
+            modelBuilder.Entity("TaskTracker.Models.TaskItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

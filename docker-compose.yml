@@ -10,8 +10,7 @@ services:
       - taskTracker
     volumes:
       - ./src:/app
-      - ./.env:/env/.env
-    command: "tail -f /dev/null" 
+    command: "dotnet run watch" 
     working_dir: /app
     env_file:
       - .env
