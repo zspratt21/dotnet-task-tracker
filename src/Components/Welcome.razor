@@ -1,0 +1,30 @@
+﻿@namespace TaskTracker.Components
+
+<div class="h-screen flex flex-col justify-center items-center bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-md text-center">
+        <h1 class="text-2xl font-bold mb-4">Welcome to the Task Tracking API!</h1>
+        <p>Use this API to create new tasks and mark them as complete when you finish them. The following endpoints are available:</p>
+        <div class="text-left my-2">
+            <h2 class="font-bold"><span class="text-white p-1 rounded-lg bg-lime-600">GET</span> /api/tasks</h2>
+            <p>Returns a list of all tasks.</p>
+        </div>    
+        <div class="text-left my-2">
+            <h2 class="font-bold"><span class="text-white p-1 rounded-lg bg-lime-600">GET</span> /api/tasks/{id}</h2>
+            <p>Returns a single task with the specified id.</p>
+        </div> 
+        <div class="text-left my-2">
+            <h2 class="font-bold"><span class="text-white p-1 rounded-lg bg-blue-800">POST</span> /api/tasks</h2>
+            <p>Creates a new task. The request body should contain a JSON object with the following properties:</p>
+            <p class="p-1 my-2  w-fit rounded-lg bg-gray-500 text-white">{"name": 'My first task', "isCompleted": false}</p>
+        </div>      
+        <div class="text-left my-2">
+            <h2 class="font-bold"><span class="text-white p-1 rounded-lg bg-orange-300">PUT</span> /api/tasks/{id}</h2>
+            <p>Updates an existing task with the specified id. The request body should contain a JSON object with the following properties:</p>
+            <p class="p-1 my-2 w-fit rounded-lg bg-gray-500 text-white">{"id": 1 "name": 'My first task', "isCompleted": true}</p>
+        </div>     
+        <div class="text-left my-2">
+            <h2 class="font-bold"><span class="text-white p-1 rounded-lg bg-red-600">DELETE</span> /api/tasks/{id}</h2>
+            <p>Deletes an existing task with the specified id.</p>
+        </div>
+    </div>  
+</div>
