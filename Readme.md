@@ -34,20 +34,20 @@ dotnet ef database update
 ```
 ### Usage
 Use an API client such as ARC or Postman, to make requests to the API. By default, the API is hosted at http://localhost:5000. The following endpoints are available:
-#### GET /api/tasks
+#### GET /api/Tasks
 Returns a list of all tasks.
-#### GET /api/tasks/{id}
+#### GET /api/Tasks/{id}
 Returns a single task with the specified id.
-#### POST /api/tasks
+#### POST /api/Tasks
 Creates a new task. The request body should contain a JSON object with the following properties:
 - name (string)
 - isCompleted (bool)
-#### PUT /api/tasks/{id}
+#### PUT /api/Tasks/{id}
 Updates an existing task with the specified id. The request body should contain a JSON object with the following properties:
 - id (int)
 - name (string)
 - isCompleted (bool)
-#### DELETE /api/tasks/{id}
+#### DELETE /api/Tasks/{id}
 Deletes an existing task with the specified id.
 ### Running the tests
 You can run the tests in your IDE of choice or navigate to the tests folder and run:
