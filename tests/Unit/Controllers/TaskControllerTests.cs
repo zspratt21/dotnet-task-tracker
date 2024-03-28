@@ -27,8 +27,8 @@ public class TasksControllerTests : IDisposable
         _controller = new TasksController(_context);
 
         _context.Tasks.AddRange(
-            new TaskItem { Id = 1, Name = "Task 1", IsCompleted = false },
-            new TaskItem { Id = 2, Name = "Task 2", IsCompleted = true }
+            new TaskItem { Id = 1, Name = "Task 1", Description = "description for task", IsCompleted = false },
+            new TaskItem { Id = 2, Name = "Task 2", Description = "description for task", IsCompleted = true }
         );
         _context.SaveChanges();
     }
@@ -64,7 +64,7 @@ public class TasksControllerTests : IDisposable
     [Fact]
     public async Task PutTaskItem_ReturnsBadRequest_WhenIdsDoNotMatch()
     {
-        var result = await _controller.PutTaskItem(1, new TaskItem { Id = 2, Name = "Task 2", IsCompleted = true });
+        var result = await _controller.PutTaskItem(1, new TaskItem { Id = 2, Name = "Task 2", Description = "description for task", IsCompleted = true });
 
         Assert.IsType<BadRequestResult>(result);
     }
@@ -72,7 +72,7 @@ public class TasksControllerTests : IDisposable
     [Fact]
     public async Task PutTaskItem_ReturnsNotFound_WhenTaskItemDoesNotExist()
     {
-        var result = await _controller.PutTaskItem(4, new TaskItem { Id = 4, Name = "Task 4", IsCompleted = false });
+        var result = await _controller.PutTaskItem(4, new TaskItem { Id = 4, Name = "Task 4", Description = "description for task", IsCompleted = false });
 
         Assert.IsType<NotFoundResult>(result);
     }
@@ -92,7 +92,7 @@ public class TasksControllerTests : IDisposable
     [Fact]
     public async Task PostTaskItem_ReturnsCreatedResponse_WhenSuccessful()
     {
-        var result = await _controller.PostTaskItem(new TaskItem { Id = 3, Name = "Task 3", IsCompleted = false });
+        var result = await _controller.PostTaskItem(new TaskItem { Id = 3, Name = "Task 3", Description = "description for task", IsCompleted = false });
 
         Assert.IsType<CreatedAtActionResult>(result.Result);
     }

@@ -12,13 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-	.Replace("localhost", EnvReader.Instance["DB_HOST"])
-    .Replace("3306", EnvReader.Instance["DB_PORT"])
+    .Replace("localhost", EnvReader.Instance["DB_HOST"])
+    .Replace("3306",  EnvReader.Instance["DB_PORT"])
     .Replace("mydb", EnvReader.Instance["DB_DATABASE"])
     .Replace("myuser", EnvReader.Instance["DB_USERNAME"])
     .Replace("mypassword", EnvReader.Instance["DB_PASSWORD"]);
 
-builder.Services.AddDbContext<TaskContext>(options => options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 32))));
+builder.Services.AddDbContext<TaskContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddServerSideBlazor();
 builder.Services.AddRazorPages();
 

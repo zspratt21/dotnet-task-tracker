@@ -7,38 +7,25 @@ services:
       dockerfile: dockerfile
     ports:
       - "${PORT:-5000}:${PORT:-5000}"
-    networks:
-      - taskTracker
     volumes:
       - ./src:/app
-    command: "dotnet run watch" 
+    command: "dotnet run watch"
     working_dir: /app
     env_file:
       - .env
     depends_on:
-      - mysql
-  
-  mysql:
-    image: 'mysql/mysql-server:8.0'
-    ports: 
-      - '${DB_PORT:-3306}:3306'
-    environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_USER: '${DB_USERNAME}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
-    volumes:
-      - 'mysql-data:/var/lib/mysql'
-    networks:
-      - taskTracker
+      - mssql
 
-networks:
-  taskTracker:
-    ipam:
-      driver: default
-      
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04
+    ports:
+      - '${DB_PORT:-1433}:1433'
+    environment:
+      SA_PASSWORD: '${DB_PASSWORD}'
+      MSSQL_DB: '${DB_DATABASE}'
+      ACCEPT_EULA: 'Y'
+    volumes:
+      - 'mssql-data:/var/opt/mssql'
+
 volumes:
-  mysql-data:
-    driver: local
+  mssql-data:
